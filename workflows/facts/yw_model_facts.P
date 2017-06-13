@@ -1,0 +1,237 @@
+% FACT: program(program_id, program_name, qualified_program_name, begin_annotation_id, end_annotation_id).
+program(1, 'BranchingWorkflow', 'BranchingWorkflow', 1, 66).
+program(2, 'Setup', 'BranchingWorkflow/Setup', 5, 13).
+program(3, 'FileToDataStream', 'BranchingWorkflow/FileToDataStream', 14, 17).
+program(4, 'EnvironmentTagger', 'BranchingWorkflow/EnvironmentTagger', 18, 24).
+program(5, 'FilterToJustMarine', 'BranchingWorkflow/FilterToJustMarine', 25, 31).
+program(6, 'FilterExcludingMarine', 'BranchingWorkflow/FilterExcludingMarine', 32, 38).
+program(7, 'WoRMSLookup', 'BranchingWorkflow/WoRMSLookup', 39, 45).
+program(8, 'GBIFLookup', 'BranchingWorkflow/GBIFLookup', 46, 52).
+program(9, 'StreamMerge', 'BranchingWorkflow/StreamMerge', 53, 57).
+program(10, 'CsvFileWriter', 'BranchingWorkflow/CsvFileWriter', 58, 63).
+
+% FACT: workflow(program_id).
+workflow(1).
+
+% FACT: function(program_id).
+
+% FACT: has_subprogram(program_id, subprogram_id).
+has_subprogram(1, 2).
+has_subprogram(1, 3).
+has_subprogram(1, 4).
+has_subprogram(1, 5).
+has_subprogram(1, 6).
+has_subprogram(1, 7).
+has_subprogram(1, 8).
+has_subprogram(1, 9).
+has_subprogram(1, 10).
+
+% FACT: port(port_id, port_type, port_name, qualified_port_name, port_annotation_id, data_id).
+port(1, 'PARAM', 'DwCA_URI', 'BranchingWorkflow<-DwCA_URI', 2, 1).
+port(2, 'IN', 'DarwinCoreArchive', 'BranchingWorkflow<-DarwinCoreArchive', 3, 2).
+port(28, 'OUT', 'OutputFile', 'BranchingWorkflow->OutputFile', 64, 16).
+port(29, 'OUT', 'LogFile', 'BranchingWorkflow->LogFile', 65, 17).
+port(3, 'PARAM', 'DwCA_URI', 'BranchingWorkflow/Setup<-DwCA_URI', 6, 3).
+port(4, 'IN', 'DarwinCoreArchive', 'BranchingWorkflow/Setup<-DarwinCoreArchive', 7, 4).
+port(5, 'OUT', 'workspace', 'BranchingWorkflow/Setup->workspace', 9, 5).
+port(6, 'OUT', 'OccurrenceFile', 'BranchingWorkflow/Setup->OccurrenceFile', 11, 6).
+port(7, 'IN', 'OccurrenceFile', 'BranchingWorkflow/FileToDataStream<-OccurrenceFile', 15, 6).
+port(8, 'OUT', 'DataRecord', 'BranchingWorkflow/FileToDataStream->DataRecord', 16, 7).
+port(9, 'IN', 'DataRecord', 'BranchingWorkflow/EnvironmentTagger<-DataRecord', 19, 7).
+port(10, 'OUT', 'LogFile', 'BranchingWorkflow/EnvironmentTagger->LogFile', 20, 8).
+port(11, 'OUT', 'TaggedDataRecord', 'BranchingWorkflow/EnvironmentTagger->TaggedDataRecord', 23, 9).
+port(12, 'IN', 'TaggedDataRecord', 'BranchingWorkflow/FilterToJustMarine<-TaggedDataRecord', 26, 9).
+port(13, 'OUT', 'LogFile', 'BranchingWorkflow/FilterToJustMarine->LogFile', 27, 8).
+port(14, 'OUT', 'Marine', 'BranchingWorkflow/FilterToJustMarine->Marine', 30, 10).
+port(15, 'IN', 'TaggedDataRecord', 'BranchingWorkflow/FilterExcludingMarine<-TaggedDataRecord', 33, 9).
+port(16, 'OUT', 'LogFile', 'BranchingWorkflow/FilterExcludingMarine->LogFile', 34, 8).
+port(17, 'OUT', 'NotMarine', 'BranchingWorkflow/FilterExcludingMarine->NotMarine', 37, 11).
+port(18, 'IN', 'Marine', 'BranchingWorkflow/WoRMSLookup<-Marine', 40, 10).
+port(19, 'OUT', 'WoRMSOutput', 'BranchingWorkflow/WoRMSLookup->WoRMSOutput', 41, 12).
+port(20, 'IN', 'NotMarine', 'BranchingWorkflow/GBIFLookup<-NotMarine', 47, 11).
+port(21, 'OUT', 'GBIFOutput', 'BranchingWorkflow/GBIFLookup->GBIFOutput', 48, 13).
+port(22, 'IN', 'GBIFOutput', 'BranchingWorkflow/StreamMerge<-GBIFOutput', 54, 13).
+port(23, 'IN', 'WoRMSOutput', 'BranchingWorkflow/StreamMerge<-WoRMSOutput', 55, 12).
+port(24, 'OUT', 'MergedStream', 'BranchingWorkflow/StreamMerge->MergedStream', 56, 14).
+port(25, 'IN', 'Workspace', 'BranchingWorkflow/CsvFileWriter<-Workspace', 59, 5).
+port(26, 'IN', 'MergedStream', 'BranchingWorkflow/CsvFileWriter<-MergedStream', 60, 14).
+port(27, 'OUT', 'OutputFile', 'BranchingWorkflow/CsvFileWriter->OutputFile', 61, 15).
+
+% FACT: port_alias(port_id, alias).
+port_alias(5, 'Workspace').
+
+% FACT: port_uri_template(port_id, uri).
+port_uri_template(2, 'file:packages/kurator_branching/data/kurator_sample_data.txt').
+port_uri_template(4, 'packages/kurator_branching/data/kurator_sample_data.txt').
+port_uri_template(6, 'file:{workspace}/darwinized_file.txt').
+port_uri_template(10, 'file:runlog.log').
+port_uri_template(13, 'file:runlog.log').
+port_uri_template(16, 'file:runlog.log').
+port_uri_template(19, 'file:runlog.log').
+port_uri_template(21, 'file:runlog.log').
+port_uri_template(27, 'file:{workspace}/mergedoutuputfile.csv').
+
+% FACT: has_in_port(block_id, port_id).
+has_in_port(1, 1).
+has_in_port(1, 2).
+has_in_port(2, 3).
+has_in_port(2, 4).
+has_in_port(3, 7).
+has_in_port(4, 9).
+has_in_port(5, 12).
+has_in_port(6, 15).
+has_in_port(7, 18).
+has_in_port(8, 20).
+has_in_port(9, 22).
+has_in_port(9, 23).
+has_in_port(10, 25).
+has_in_port(10, 26).
+
+% FACT: has_out_port(block_id, port_id).
+has_out_port(1, 28).
+has_out_port(1, 29).
+has_out_port(2, 5).
+has_out_port(2, 6).
+has_out_port(3, 8).
+has_out_port(4, 10).
+has_out_port(4, 11).
+has_out_port(5, 13).
+has_out_port(5, 14).
+has_out_port(6, 16).
+has_out_port(6, 17).
+has_out_port(7, 19).
+has_out_port(8, 21).
+has_out_port(9, 24).
+has_out_port(10, 27).
+
+% FACT: data(data_id, data_name, qualified_data_name).
+data(1, 'DwCA_URI', 'DwCA_URI').
+data(2, 'DarwinCoreArchive', 'DarwinCoreArchive').
+data(16, 'OutputFile', 'OutputFile').
+data(17, 'LogFile', 'LogFile').
+data(3, 'DwCA_URI', 'BranchingWorkflow.DwCA_URI').
+data(4, 'DarwinCoreArchive', 'BranchingWorkflow.DarwinCoreArchive').
+data(5, 'Workspace', 'BranchingWorkflow.Workspace').
+data(6, 'OccurrenceFile', 'BranchingWorkflow.OccurrenceFile').
+data(7, 'DataRecord', 'BranchingWorkflow.DataRecord').
+data(8, 'LogFile', 'BranchingWorkflow.LogFile').
+data(9, 'TaggedDataRecord', 'BranchingWorkflow.TaggedDataRecord').
+data(10, 'Marine', 'BranchingWorkflow.Marine').
+data(11, 'NotMarine', 'BranchingWorkflow.NotMarine').
+data(12, 'WoRMSOutput', 'BranchingWorkflow.WoRMSOutput').
+data(13, 'GBIFOutput', 'BranchingWorkflow.GBIFOutput').
+data(14, 'MergedStream', 'BranchingWorkflow.MergedStream').
+data(15, 'OutputFile', 'BranchingWorkflow.OutputFile').
+
+% FACT: channel(channel_id, data_id).
+channel(1, 3).
+channel(2, 4).
+channel(3, 6).
+channel(4, 7).
+channel(5, 9).
+channel(6, 9).
+channel(7, 10).
+channel(8, 11).
+channel(9, 13).
+channel(10, 12).
+channel(11, 5).
+channel(12, 14).
+channel(13, 16).
+channel(14, 17).
+channel(15, 1).
+channel(16, 2).
+channel(17, 15).
+channel(18, 8).
+
+% FACT: port_connects_to_channel(port_id, channel_id).
+port_connects_to_channel(3, 1).
+port_connects_to_channel(4, 2).
+port_connects_to_channel(6, 3).
+port_connects_to_channel(7, 3).
+port_connects_to_channel(8, 4).
+port_connects_to_channel(9, 4).
+port_connects_to_channel(11, 5).
+port_connects_to_channel(12, 5).
+port_connects_to_channel(11, 6).
+port_connects_to_channel(15, 6).
+port_connects_to_channel(14, 7).
+port_connects_to_channel(18, 7).
+port_connects_to_channel(17, 8).
+port_connects_to_channel(20, 8).
+port_connects_to_channel(21, 9).
+port_connects_to_channel(22, 9).
+port_connects_to_channel(19, 10).
+port_connects_to_channel(23, 10).
+port_connects_to_channel(5, 11).
+port_connects_to_channel(25, 11).
+port_connects_to_channel(24, 12).
+port_connects_to_channel(26, 12).
+port_connects_to_channel(27, 13).
+port_connects_to_channel(16, 14).
+port_connects_to_channel(3, 15).
+port_connects_to_channel(4, 16).
+port_connects_to_channel(27, 17).
+port_connects_to_channel(16, 18).
+
+% FACT: inflow_connects_to_channel(port_id, channel_id).
+inflow_connects_to_channel(1, 1).
+inflow_connects_to_channel(2, 2).
+inflow_connects_to_channel(1, 15).
+inflow_connects_to_channel(2, 16).
+
+% FACT: outflow_connects_to_channel(port_id, channel_id).
+outflow_connects_to_channel(28, 13).
+outflow_connects_to_channel(29, 14).
+outflow_connects_to_channel(28, 17).
+outflow_connects_to_channel(29, 18).
+
+% FACT: uri_variable(uri_variable_id, variable_name, port_id).
+uri_variable(1, 'workspace', 6).
+uri_variable(2, 'workspace', 27).
+
+% FACT: log_template(log_template_id, port_id, entry_template, log_annotation_id).
+log_template(1, 10, '{timestamp} [{loglevel}] ACTOR<{actorname}> -> {ActorValue}:isMarine:true={isMarineValue}', 22).
+log_template(2, 13, '{timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}', 29).
+log_template(3, 16, '{timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}', 36).
+log_template(4, 19, '{timestamp} [{loglevel}] ACTOR<{actorname}> -> Looking Up: {scientificName}:{scientificNameAuthorship}', 43).
+log_template(5, 19, '{timestamp} [{loglevel}] ACTOR<{actorname}> -> Found GUID: {LookupValue}', 44).
+log_template(6, 21, '{timestamp} [{loglevel}] ACTOR<{actorname}> -> Looking Up: {scientificName}:{scientificNameAuthorship}', 50).
+log_template(7, 21, '{timestamp} [{loglevel}] ACTOR<{actorname}> -> Found GUID: {LookupValue}', 51).
+
+% FACT: log_template_variable(log_variable_id, variable_name, log_template_id).
+log_template_variable(1, 'timestamp', 1).
+log_template_variable(2, 'loglevel', 1).
+log_template_variable(3, 'actorname', 1).
+log_template_variable(4, 'ActorValue', 1).
+log_template_variable(5, 'isMarineValue', 1).
+log_template_variable(6, 'timestamp', 2).
+log_template_variable(7, 'loglevel', 2).
+log_template_variable(8, 'actorname', 2).
+log_template_variable(9, 'matchMarineValue', 2).
+log_template_variable(10, 'occurrenceID', 2).
+log_template_variable(11, 'timestamp', 3).
+log_template_variable(12, 'loglevel', 3).
+log_template_variable(13, 'actorname', 3).
+log_template_variable(14, 'matchMarineValue', 3).
+log_template_variable(15, 'occurrenceID', 3).
+log_template_variable(16, 'timestamp', 4).
+log_template_variable(17, 'loglevel', 4).
+log_template_variable(18, 'actorname', 4).
+log_template_variable(19, 'scientificName', 4).
+log_template_variable(20, 'scientificNameAuthorship', 4).
+log_template_variable(21, 'timestamp', 5).
+log_template_variable(22, 'loglevel', 5).
+log_template_variable(23, 'actorname', 5).
+log_template_variable(24, 'LookupValue', 5).
+log_template_variable(25, 'timestamp', 6).
+log_template_variable(26, 'loglevel', 6).
+log_template_variable(27, 'actorname', 6).
+log_template_variable(28, 'scientificName', 6).
+log_template_variable(29, 'scientificNameAuthorship', 6).
+log_template_variable(30, 'timestamp', 7).
+log_template_variable(31, 'loglevel', 7).
+log_template_variable(32, 'actorname', 7).
+log_template_variable(33, 'LookupValue', 7).
+
+% FACT: assert(program_id, subject_id, predicate, object_id).
+
