@@ -101,8 +101,8 @@ components:
         actor: !ref Darwinize
         parameter: namespace
 # @BEGIN BranchingWorkflow
-# @PARAM DwCA_URI
-# @IN DarwinCoreArchive @URI file:packages/kurator_branching/data/kurator_sample_data.txt
+# @IN DwCA_URI
+# @PARAM LogFile
 
 # Inline python actor to make a workspace on the fly to use for writing temporary 
 # if one is not supplied in the workflow-defined parameters. It creates a unique
@@ -110,7 +110,7 @@ components:
 # one does not exist.
 # @BEGIN Setup
 # @PARAM DwCA_URI
-# @IN DarwinCoreArchive @URI packages/kurator_branching/data/kurator_sample_data.txt
+# @IN DarwinCoreArchive @URI {DwCA_URI}
 - id: MakeWorkspace
   type: PythonActor
   properties:
@@ -198,8 +198,8 @@ components:
     # The "upstream" actor from which to receive a message.
     listensTo:
       - !ref DownloadDarwinCloudLookup
-# @OUT workspace @as Workspace
-# @OUT OccurrenceFile @URI file:{workspace}/darwinized_file.txt
+# @OUT Workspace
+# @OUT OccurrenceFile @URI file:{Workspace}/darwinized_file.txt
 # @END Setup
 
 # take the darwinized occurrence file and stream records from it
@@ -221,8 +221,8 @@ components:
   properties:
     listensTo:
       - !ref FileToDataStream
-# @OUT LogFile @URI file:runlog.log       
-#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> {ActorValue}:isMarine:true={isMarineValue}
+# @OUT LogFile @URI file:{LogFile}       
+#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> isMarine={isMarineValue} for occurrenceID={occurrenceId} 
 # @OUT TaggedDataRecord      
 # @END EnvironmentTagger      
       
@@ -238,8 +238,8 @@ components:
       filterKeyToMatch: isMarine
       matchValue: 'true'
       passOnMatch: true
-# @OUT LogFile @URI file:runlog.log       
-#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}    
+# @OUT LogFile @URI file:{LogFile}       
+#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> ->  [{filterKey}]=[{matchValue}]:{match}. Passing occurrenceID={occurrenceID}    
 # @OUT Marine
 # @End FilterToJustMarine
 
@@ -255,8 +255,8 @@ components:
       filterKeyToMatch: isMarine
       matchValue: 'true'
       passOnMatch: false      
-# @OUT LogFile @URI file:runlog.log       
-#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}    
+# @OUT LogFile @URI file:{LogFile}       
+#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> ->  [{filterKey}]=[{matchValue}]:{match}. Passing occurrenceID={occurrenceID}    
 # @OUT NotMarine
 # @END FilterExcludingMarine
 
@@ -268,9 +268,7 @@ components:
   properties:
     listensTo:
       - !ref FilterJustMarine
-# @OUT WoRMSOutput @URI file:runlog.log
-#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Looking Up: {scientificName}:{scientificNameAuthorship}
-#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Found GUID: {LookupValue}
+# @OUT WoRMSOutput
 # @END WoRMSLookup
 
 # Lookup GUIDs for names in GBIF
@@ -281,9 +279,7 @@ components:
   properties:
     listensTo:
       - !ref FilterExcludeMarine
-# @OUT GBIFOutput @URI file:runlog.log
-#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Looking Up: {scientificName}:{scientificNameAuthorship}
-#    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Found GUID: {LookupValue}
+# @OUT GBIFOutput
 # @END GBIFLookup
 
 # Merge the streams
@@ -314,7 +310,7 @@ components:
     parameters:
       filePath: mergedoutuputfile.csv 
       numberOfInputs: 2
-# @OUT OutputFile @URI file:{workspace}/mergedoutuputfile.csv    
+# @OUT OutputFile @URI file:{Workspace}/mergedoutputfile.csv      
 # @END CsvFileWriter
 
 # Inline python actor to take care of any unfinished business and finish the workflow.

@@ -1,0 +1,79 @@
+
+digraph yw_data_view {
+rankdir=TB
+fontname=Courier; fontsize=18; labelloc=t
+label="BranchingWorkflow"
+subgraph cluster_workflow { label=""; color=black; penwidth=2
+subgraph cluster_workflow_inner { label=""; color=white
+node[shape=box style="filled" fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+Setup
+FileToDataStream
+EnvironmentTagger
+FilterToJustMarine
+FilterExcludingMarine
+WoRMSLookup
+GBIFLookup
+StreamMerge
+CsvFileWriter
+node[shape=box style="filled" fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+node[shape=box style="rounded,filled" fillcolor="#FFE4B5" peripheries=1 fontname="Courier-Bold" fontsize=9]
+DarwinCoreArchive[shape=record rankdir=LR label="{<f0> DarwinCoreArchive |<f1>packages/kurator_branching/data/kurator_sample_data.txt\l}"]
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
+Workspace
+OccurrenceFile
+DataRecord
+TaggedDataRecord
+Marine
+NotMarine
+WoRMSOutput
+GBIFOutput
+MergedStream
+node[shape=box style="rounded,filled" fillcolor="#FFE4B5" peripheries=1 fontname="Courier-Bold" fontsize=9]
+LogFile[shape=record rankdir=LR label="{<f0> LogFile |<f1>runlog.log\l}"]
+OutputFile[shape=record rankdir=LR label="{<f0> OutputFile |<f1>workspace_ef376d40-4fed-11e7-8921-acbc3296f741/mergedoutuputfile.csv\l}"]
+node[shape=box style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica]
+DwCA_URI
+}}
+subgraph cluster_inflows { label=""; color=white; penwidth=2
+subgraph cluster_inflows_inner { label=""; color=white
+node[shape=circle fillcolor="#FFFFFF" peripheries=1 width=0.2]
+DarwinCoreArchive_inflow [label=""]
+DwCA_URI_inflow [label=""]
+}}
+subgraph cluster_outflows { label=""; color=white; penwidth=2
+subgraph cluster_outflows_inner { label=""; color=white
+node[shape=circle fillcolor="#FFFFFF" peripheries=1 width=0.2]
+LogFile_outflow [label=""]
+OutputFile_outflow [label=""]
+}}
+DwCA_URI -> Setup
+DarwinCoreArchive -> Setup
+Workspace -> CsvFileWriter
+OccurrenceFile -> FileToDataStream
+DataRecord -> EnvironmentTagger
+TaggedDataRecord -> FilterToJustMarine
+TaggedDataRecord -> FilterExcludingMarine
+Marine -> WoRMSLookup
+NotMarine -> GBIFLookup
+WoRMSOutput -> StreamMerge
+GBIFOutput -> StreamMerge
+MergedStream -> CsvFileWriter
+Setup -> Workspace
+Setup -> OccurrenceFile
+FileToDataStream -> DataRecord
+EnvironmentTagger -> LogFile
+EnvironmentTagger -> TaggedDataRecord
+FilterToJustMarine -> LogFile
+FilterToJustMarine -> Marine
+FilterExcludingMarine -> LogFile
+FilterExcludingMarine -> NotMarine
+WoRMSLookup -> WoRMSOutput
+GBIFLookup -> GBIFOutput
+StreamMerge -> MergedStream
+CsvFileWriter -> OutputFile
+DarwinCoreArchive_inflow -> DarwinCoreArchive
+DwCA_URI_inflow -> DwCA_URI
+LogFile -> LogFile_outflow
+OutputFile -> OutputFile_outflow
+}
+

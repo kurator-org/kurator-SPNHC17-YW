@@ -1,0 +1,62 @@
+
+digraph yw_data_view {
+rankdir=TB
+fontname=Courier; fontsize=18; labelloc=t
+label="BranchingWorkflow"
+subgraph cluster_workflow { label=""; color=black; penwidth=2
+subgraph cluster_workflow_inner { label=""; color=white
+node[shape=box style="filled" fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+GBIFLookup
+WoRMSLookup
+FilterExcludingMarine
+FilterToJustMarine
+EnvironmentTagger
+FileToDataStream
+Setup
+StreamMerge
+node[shape=box style="filled" fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
+DarwinCoreArchive
+OccurrenceFile
+DataRecord
+TaggedDataRecord
+Marine
+NotMarine
+WoRMSOutput
+GBIFOutput
+MergedStream
+node[shape=box style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica]
+DwCA_URI
+}}
+subgraph cluster_inflows { label=""; color=white; penwidth=2
+subgraph cluster_inflows_inner { label=""; color=white
+node[shape=circle fillcolor="#FFFFFF" peripheries=1 width=0.2]
+DarwinCoreArchive_inflow [label=""]
+DwCA_URI_inflow [label=""]
+}}
+subgraph cluster_outflows { label=""; color=white; penwidth=2
+subgraph cluster_outflows_inner { label=""; color=white
+node[shape=circle fillcolor="#FFFFFF" peripheries=1 width=0.2]
+}}
+Marine -> WoRMSLookup
+NotMarine -> GBIFLookup
+OccurrenceFile -> FileToDataStream
+WoRMSOutput -> StreamMerge
+DataRecord -> EnvironmentTagger
+GBIFOutput -> StreamMerge
+DwCA_URI -> Setup
+TaggedDataRecord -> FilterExcludingMarine
+TaggedDataRecord -> FilterToJustMarine
+DarwinCoreArchive -> Setup
+Setup -> OccurrenceFile
+FileToDataStream -> DataRecord
+EnvironmentTagger -> TaggedDataRecord
+FilterToJustMarine -> Marine
+FilterExcludingMarine -> NotMarine
+WoRMSLookup -> WoRMSOutput
+GBIFLookup -> GBIFOutput
+StreamMerge -> MergedStream
+DarwinCoreArchive_inflow -> DarwinCoreArchive
+DwCA_URI_inflow -> DwCA_URI
+}
+
