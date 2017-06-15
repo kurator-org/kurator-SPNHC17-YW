@@ -108,6 +108,7 @@ components:
 # workspace if a workspace location is not explicitly provided, or if the provided
 # one does not exist.
 # @BEGIN Setup
+# @IN inputfile
 # @IN DarwinCoreFile @URI file:{inputfile}
 - id: MakeWorkspace
   type: PythonActor
