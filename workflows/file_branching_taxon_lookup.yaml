@@ -101,7 +101,6 @@ components:
         actor: !ref Darwinize
         parameter: namespace
 # @BEGIN BranchingWorkflow
-# @PARAM DwCA_URI
 # @IN DarwinCoreArchive @URI file:packages/kurator_branching/data/kurator_sample_data.txt
 
 # Inline python actor to make a workspace on the fly to use for writing temporary 
@@ -109,7 +108,6 @@ components:
 # workspace if a workspace location is not explicitly provided, or if the provided
 # one does not exist.
 # @BEGIN Setup
-# @PARAM DwCA_URI
 # @IN DarwinCoreArchive @URI packages/kurator_branching/data/kurator_sample_data.txt
 - id: MakeWorkspace
   type: PythonActor
