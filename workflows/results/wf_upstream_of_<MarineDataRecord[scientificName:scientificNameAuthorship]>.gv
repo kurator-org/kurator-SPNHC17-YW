@@ -6,28 +6,17 @@ label="BranchingWorkflow"
 subgraph cluster_workflow { label=""; color=black; penwidth=2
 subgraph cluster_workflow_inner { label=""; color=white
 node[shape=box style="filled" fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
-Setup
-FileToDataStream
 EnvironmentTagger
+FileToDataStream
+Setup
 FilterToJustMarine
-FilterExcludingMarine
-WoRMSLookup
-GBIFLookup
-StreamMerge
-CsvFileWriter
 node[shape=box style="filled" fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
 node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
 DarwinCoreFile
-Workspace
 OccurrenceFile
 DataRecord
 TaggedDataRecord
 <MarineDataRecord[scientificName:scientificNameAuthorship]>
-<noMarineDataRecord[scientificName:scientificNameAuthorship]>
-WoRMSOutput
-GBIFOutput
-MergedStream
-OutputFile
 node[shape=box style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica]
 InputFilePath
 }}
@@ -40,32 +29,17 @@ InputFilePath_inflow [label=""]
 subgraph cluster_outflows { label=""; color=white; penwidth=2
 subgraph cluster_outflows_inner { label=""; color=white
 node[shape=circle fillcolor="#FFFFFF" peripheries=1 width=0.2]
-OutputFile_outflow [label=""]
 }}
-OccurrenceFile -> FileToDataStream
-<noMarineDataRecord[scientificName:scientificNameAuthorship]> -> GBIFLookup
-DataRecord -> EnvironmentTagger
-WoRMSOutput -> StreamMerge
-InputFilePath -> Setup
-GBIFOutput -> StreamMerge
-TaggedDataRecord -> FilterExcludingMarine
 TaggedDataRecord -> FilterToJustMarine
+DataRecord -> EnvironmentTagger
+OccurrenceFile -> FileToDataStream
 DarwinCoreFile -> Setup
-MergedStream -> CsvFileWriter
-<MarineDataRecord[scientificName:scientificNameAuthorship]> -> WoRMSLookup
-Workspace -> CsvFileWriter
-Setup -> Workspace
+InputFilePath -> Setup
 Setup -> OccurrenceFile
 FileToDataStream -> DataRecord
 EnvironmentTagger -> TaggedDataRecord
 FilterToJustMarine -> <MarineDataRecord[scientificName:scientificNameAuthorship]>
-FilterExcludingMarine -> <noMarineDataRecord[scientificName:scientificNameAuthorship]>
-WoRMSLookup -> WoRMSOutput
-GBIFLookup -> GBIFOutput
-StreamMerge -> MergedStream
-CsvFileWriter -> OutputFile
 DarwinCoreFile_inflow -> DarwinCoreFile
 InputFilePath_inflow -> InputFilePath
-OutputFile -> OutputFile_outflow
 }
 

@@ -11,6 +11,13 @@ gv_nodestyle__atomic_step :-
 gv_nodestyle__subworkflow :-
     gv_nodestyle__atomic_step.
 
+% explicit empty/unused box/step
+gv_nodestyle__atomic_unusedstep :-
+    write('node[shape=box style="filled" fillcolor="#d6d6d7" peripheries=1 fontname=Courier]'), eol.
+
+gv_nodestyle__unusedsubworkflow :-
+    gv_nodestyle__atomic_unusedstep.
+
 gv_node_style__data :-
     gv_nodestyle(box, 'rounded,filled', '#FFFFCC', 1, 'Helvetica').
 
@@ -23,15 +30,25 @@ gv_node_style__workflow_port :-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% graphviz styles for YW-NW retrospective provenance graphs
+% graphviz styles for YW(-NW) retrospective provenance graphs
 
 gv_nodestyle__atomic_step_invocation :-
     write('node[shape=box style=filled fillcolor="#66883F" peripheries=1 fontname="Courier-Bold" fontcolor=white]'), eol.
 
-gv_nodestyle__data_value :-
+% file-level observables
+gv_nodestyle__datafile_value :-
         write('node[shape=box style="rounded,filled" fillcolor="#FFE4B5" peripheries=1 fontname="Courier-Bold" fontsize=9]'), eol.  
+
 gv_nodestyle__param_value :-
     write('node[shape=box style="rounded,filled" fillcolor="#222222" peripheries=1 fontname="Helvetica-Bold"]'), eol.
+
+% record-/data-level observables
+gv_nodestyle__datarecord_value :-
+        write('node[shape=box style="rounded,filled" fillcolor="#f8d2db" peripheries=1 fontname="Courier-Bold" fontsize=9]'), eol.
+		
+% explicit empty/unused data
+gv_nodestyle__undatafile_value :-
+        write('node[shape=box style="rounded,filled" fillcolor="#d6d6d7" peripheries=1 fontname=Helvetica]'), eol.		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 gv_nodes__atomic_steps(WorkflowId) :-

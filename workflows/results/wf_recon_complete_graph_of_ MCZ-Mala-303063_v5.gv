@@ -10,27 +10,31 @@ Setup
 FileToDataStream
 EnvironmentTagger
 FilterToJustMarine
-FilterExcludingMarine
 WoRMSLookup
-GBIFLookup
 StreamMerge
 CsvFileWriter
+node[shape=box style="filled" fillcolor="#d6d6d7" peripheries=1 fontname=Courier]
+FilterExcludingMarine
+GBIFLookup
 node[shape=box style="filled" fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
 node[shape=box style="rounded,filled" fillcolor="#FFE4B5" peripheries=1 fontname="Courier-Bold" fontsize=9]
-DarwinCoreFile[shape=record rankdir=LR label="{<f0> DarwinCoreFile |<f1>packages/kurator_branching/data/kurator_sample_data_v2.txt\l}"]
+DarwinCoreFile[shape=record rankdir=LR label="{<f0> DarwinCoreFile |<f1>packages/kurator_branching/data/kurator_sample_data.txt\n}"]
+node[shape=box style="rounded,filled" fillcolor="#f8d2db" peripheries=1 fontname="Courier-Bold" fontsize=9]
+DataRecord[shape=record rankdir=LR label="{<f0> DataRecord |<f1>MCZ:Mala:303063\l}"]
+TaggedDataRecord[shape=record rankdir=LR label="{<f0> TaggedDataRecord |<f1>DataRecord[Marine]\n}"]
+<MarineDataRecord[scientificName:scientificNameAuthorship]>[shape=record rankdir=LR label="{<f0> MarineDataRecord[scientificName:scientificNameAuthorship] |<f1>Cypraea argus:Linnaeus, 1758\n}"]
+WoRMSOutput[shape=record rankdir=LR label="{<f0> WoRMSOutput |<f1> urn:lsid:marinespecies.org:taxname:216786\n}"]
 node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
 Workspace
 OccurrenceFile
-DataRecord
-TaggedDataRecord
-<MarineDataRecord[scientificName:scientificNameAuthorship]>
-<noMarineDataRecord[scientificName:scientificNameAuthorship]>
-WoRMSOutput
-GBIFOutput
+node[shape=box style="rounded,filled" fillcolor="#d6d6d7" peripheries=1 fontname=Helvetica]
+" "
+""
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
 MergedStream
 node[shape=box style="rounded,filled" fillcolor="#FFE4B5" peripheries=1 fontname="Courier-Bold" fontsize=9]
 LogFile[shape=record rankdir=LR label="{<f0> LogFile |<f1>runlog.log\l}"]
-OutputFile[shape=record rankdir=LR label="{<f0> OutputFile |<f1>workspace_e17253f0-52f9-11e7-9a79-acbc3296f741/mergedoutputfile.csv\l}"]
+OutputFile[shape=record rankdir=LR label="{<f0> OutputFile |<f1>workspace_ef376d40-4fed-11e7-8921-acbc3296f741/mergedoutuputfile.csv\l}"]
 node[shape=box style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica]
 InputFilePath
 }}
@@ -51,12 +55,12 @@ DarwinCoreFile -> Setup
 Workspace -> CsvFileWriter
 OccurrenceFile -> FileToDataStream
 DataRecord -> EnvironmentTagger
-TaggedDataRecord -> FilterToJustMarine
+TaggedDataRecord -> FilterToJustMarine 
 TaggedDataRecord -> FilterExcludingMarine
 <MarineDataRecord[scientificName:scientificNameAuthorship]> -> WoRMSLookup
-<noMarineDataRecord[scientificName:scientificNameAuthorship]> -> GBIFLookup
+" " -> GBIFLookup
 WoRMSOutput -> StreamMerge
-GBIFOutput -> StreamMerge
+"" -> StreamMerge
 MergedStream -> CsvFileWriter
 Setup -> Workspace
 Setup -> OccurrenceFile
@@ -66,11 +70,11 @@ EnvironmentTagger -> TaggedDataRecord
 FilterToJustMarine -> LogFile
 FilterToJustMarine -> <MarineDataRecord[scientificName:scientificNameAuthorship]>
 FilterExcludingMarine -> LogFile
-FilterExcludingMarine -> <noMarineDataRecord[scientificName:scientificNameAuthorship]>
-WoRMSLookup -> LogFile
+FilterExcludingMarine -> " "
 WoRMSLookup -> WoRMSOutput
+GBIFLookup -> ""
+WoRMSLookup -> LogFile
 GBIFLookup -> LogFile
-GBIFLookup -> GBIFOutput
 StreamMerge -> MergedStream
 CsvFileWriter -> OutputFile
 DarwinCoreFile_inflow -> DarwinCoreFile
