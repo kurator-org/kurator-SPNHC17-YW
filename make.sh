@@ -1,7 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # set variables
-source settings.sh
+sh settings.sh
+alias xsb='/usr/local/bin/xsb/xsb-3.7/bin/xsb'
 
 # create output directories
 mkdir -p $FACTS_DIR
@@ -21,7 +22,7 @@ $YW_CMD graph
 $QUERIES_DIR/materialize_yw_views.sh > $VIEWS_DIR/yw_views.P
 
 # run the workflow
-java -jar target/kurator-validation-1.0.1-SNAPSHOT-jar-with-dependencies.jar -f packages/kurator_branching/workflows/file_branching_taxon_lookup.yaml -p inputfile=packages/kurator_branching/data/kurator_sample_data.txt -l ALL > runlog.log 2>&1
+#java -jar target/kurator-validation-1.0.1-SNAPSHOT-jar-with-dependencies.jar -f packages/kurator_branching/workflows/file_branching_taxon_lookup.yaml -p inputfile=packages/kurator_branching/data/kurator_sample_data.txt -l ALL > runlog.log 2>&1
 
 # generate reconfacts.P to facts/ folder 
 
@@ -33,7 +34,8 @@ java -jar target/kurator-validation-1.0.1-SNAPSHOT-jar-with-dependencies.jar -f 
 # cd ../../../
 $YW_CMD recon
 # draw complete workflow graph with URI template
-$YW_CMD graph $WORKFLOWS_DIR/file_branching_taxon_lookup.yaml \
+#$YW_CMD graph $WORKFLOWS_DIR/file_branching_taxon_lookup.yaml \
+$YW_CMD graph $WORKFLOWS_DIR/file_branching_taxon_lookup_qz_v2.yaml \
 		-c extract.language=bash \
         -c graph.view=combined \
         -c graph.layout=tb \
