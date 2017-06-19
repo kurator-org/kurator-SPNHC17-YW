@@ -56,7 +56,7 @@ $YW_CMD recon
 echo "q1"
 
 # draw worfklow graph upstream of OutputFile
-productName=OutputFile
+productName="OutputFile"
 $QUERIES_DIR/render_wf_graph_upstream_of_data_q1.sh \'$productName\' > $RESULTS_DIR/wf_upstream_of_$productName.gv
 dot -Tpdf $RESULTS_DIR/wf_upstream_of_$productName.gv > $RESULTS_DIR/wf_upstream_of_$productName.pdf
 dot -Tsvg $RESULTS_DIR/wf_upstream_of_$productName.gv > $RESULTS_DIR/wf_upstream_of_$productName.svg
@@ -110,6 +110,7 @@ dot -Tsvg $RESULTS_DIR/wf_downstream_of_Workspace.gv > $RESULTS_DIR/wf_downstrea
 #   Q4_pro   #
 ##############
 
+echo "q4"
 # list workflow outputs downstream of DataRecord
 $QUERIES_DIR/list_outputs_downstream_of_data_q4.sh \'DataRecord\' DataRecord > $RESULTS_DIR/outputs_downstream_of_DataRecord.txt
 
@@ -121,6 +122,7 @@ $QUERIES_DIR/list_outputs_downstream_of_data_q4.sh \'Workspace\' Workspace > $RE
 #   Q5_pro   #
 ##############
 
+echo "q5"
 # draw recon worfklow graph upstream of OutputFile
 productName="OutputFile"
 $QUERIES_DIR/render_wf_recon_graph_upstream_of_data_q5.sh \'$productName\' > $RESULTS_DIR/wf_recon_upstream_of_$productName.gv
