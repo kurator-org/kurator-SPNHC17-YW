@@ -2,7 +2,6 @@
 
 # set variables
 sh settings.sh
-alias xsb='/usr/local/bin/xsb/xsb-3.7/bin/xsb'
 
 # create output directories
 mkdir -p $FACTS_DIR
