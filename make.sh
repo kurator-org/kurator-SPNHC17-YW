@@ -9,6 +9,7 @@ mkdir -p $VIEWS_DIR
 mkdir -p $RESULTS_DIR
 
 # export YW model and extract facts
+echo "yw graph"
 $YW_CMD graph
 # $YW_CMD model $WORKFLOWS_DIR/file_branching_taxon_lookup.yaml \
 #         -c extract.language=bash \
@@ -21,13 +22,14 @@ $YW_CMD graph
 #java -jar target/kurator-validation-1.0.1-SNAPSHOT-jar-with-dependencies.jar -f packages/kurator_branching/workflows/file_branching_taxon_lookup.yaml -p inputfile=packages/kurator_branching/data/kurator_sample_data.txt -l ALL > runlog.log 2>&1
 
 # draw complete workflow graph with URI template
-$YW_CMD graph $WORKFLOWS_DIR/file_branching_taxon_lookup.yaml \
+$YW_CMD graph $WORKFLOWS_DIR/file_branching_taxon_lookup_qz_v2.yaml \
          -c extract.comment="#" \
          -c graph.view=combined \
          -c graph.layout=tb \
           > $RESULTS_DIR/complete_wf_graph_uri.gv
 dot -Tpdf $RESULTS_DIR/complete_wf_graph_uri.gv > $RESULTS_DIR/complete_wf_graph_uri.pdf
 dot -Tsvg $RESULTS_DIR/complete_wf_graph_uri.gv > $RESULTS_DIR/complete_wf_graph_uri.svg
+echo "yw graph complete_wf_graph_uri"
 
 # draw complete workflow graph
 # $QUERIES_DIR/render_complete_wf_graph.sh > $RESULTS_DIR/complete_wf_graph.gv
@@ -35,21 +37,23 @@ dot -Tsvg $RESULTS_DIR/complete_wf_graph_uri.gv > $RESULTS_DIR/complete_wf_graph
 # dot -Tsvg $RESULTS_DIR/complete_wf_graph.gv > $RESULTS_DIR/complete_wf_graph.svg
 
 # materialize views of YW facts
+echo "materialize views" 
 $QUERIES_DIR/materialize_yw_views.sh > $VIEWS_DIR/yw_views.P
 
 # list workflow outputs
+echo "list workflow outputs" 
 $QUERIES_DIR/list_workflow_outputs.sh > $RESULTS_DIR/workflow_outputs.txt
 
-# run the workflow
-java -jar target/kurator-validation-1.0.1-SNAPSHOT-jar-with-dependencies.jar -f packages/kurator_branching/workflows/file_branching_taxon_lookup.yaml -p inputfile=packages/kurator_branching/data/kurator_sample_data_v2.txt -l ALL > runlog.log 2>&1
-
 # generate reconfacts.P to facts/ folder 
+echo "yw recon"
 $YW_CMD recon
 
 
 ##############
 #   Q1_pro   #
 ##############
+
+echo "q1"
 
 # draw worfklow graph upstream of OutputFile
 productName=OutputFile
@@ -80,6 +84,7 @@ dot -Tsvg $RESULTS_DIR/wf_upstream_of_$productName.gv > $RESULTS_DIR/wf_upstream
 #   Q2_pro   #
 ##############
 
+echo "q2"
 # list workflow inputs upstream of output data OutputFile
 $QUERIES_DIR/list_inputs_upstream_of_data_q2.sh \'OutputFile\' OutputFile > $RESULTS_DIR/inputs_upstream_of_OutputFile.txt
 
@@ -90,6 +95,7 @@ $QUERIES_DIR/list_inputs_upstream_of_data_q2.sh \'MergedStream\' MergedStream > 
 #   Q3_pro   #
 ##############
 
+echo "q3"
 # draw workflow graph downstream of DataRecord
 $QUERIES_DIR/render_wf_graph_downstream_of_data_q3.sh \'DataRecord\' > $RESULTS_DIR/wf_downstream_of_DataRecord.gv
 dot -Tpdf $RESULTS_DIR/wf_downstream_of_DataRecord.gv > $RESULTS_DIR/wf_downstream_of_DataRecord.pdf
@@ -132,6 +138,8 @@ dot -Tsvg $RESULTS_DIR/wf_recon_upstream_of_$productName.gv > $RESULTS_DIR/wf_re
 #   Q6_pro   #
 ##############
 
+echo "q6 recon hybrid file level runtime observables" 
+
 # draw recon workflow graph with all (file-level) runtime observables
 $QUERIES_DIR/render_recon_complete_wf_graph_q6.sh > $RESULTS_DIR/wf_recon_complete_graph_all_observables.gv
 dot -Tpdf $RESULTS_DIR/wf_recon_complete_graph_all_observables.gv > $RESULTS_DIR/wf_recon_complete_graph_all_observables.pdf
@@ -141,6 +149,7 @@ dot -Tsvg $RESULTS_DIR/wf_recon_complete_graph_all_observables.gv > $RESULTS_DIR
 #   Q7_pro   #
 ##############
 
+echo "q7 recon hybrid record level observables MCZ:MALA:303063"  
 # given an occurrenceID, draw hybrid complete provenance graph with record-level runtime observables
 # isMarine occurrenceID="MCZ:Mala:303063"
 occurrenceID="MCZ:Mala:303063"
