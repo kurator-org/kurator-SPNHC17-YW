@@ -18,8 +18,8 @@ node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname
 DataRecord
 LogFile
 TaggedDataRecord
-Marine
-NotMarine
+<MarineDataRecord[scientificName:scientificNameAuthorship]>
+<noMarineDataRecord[scientificName:scientificNameAuthorship]>
 WoRMSOutput
 GBIFOutput
 MergedStream
@@ -40,17 +40,19 @@ CsvFileWriter -> OutputFile
 StreamMerge -> MergedStream
 GBIFLookup -> GBIFOutput
 WoRMSLookup -> WoRMSOutput
-FilterExcludingMarine -> NotMarine
-FilterToJustMarine -> Marine
+FilterExcludingMarine -> <noMarineDataRecord[scientificName:scientificNameAuthorship]>
+FilterToJustMarine -> <MarineDataRecord[scientificName:scientificNameAuthorship]>
 EnvironmentTagger -> TaggedDataRecord
+GBIFLookup -> LogFile
+WoRMSLookup -> LogFile
 FilterExcludingMarine -> LogFile
 FilterToJustMarine -> LogFile
 EnvironmentTagger -> LogFile
 DataRecord -> EnvironmentTagger
 TaggedDataRecord -> FilterToJustMarine
 TaggedDataRecord -> FilterExcludingMarine
-Marine -> WoRMSLookup
-NotMarine -> GBIFLookup
+<MarineDataRecord[scientificName:scientificNameAuthorship]> -> WoRMSLookup
+<noMarineDataRecord[scientificName:scientificNameAuthorship]> -> GBIFLookup
 WoRMSOutput -> StreamMerge
 GBIFOutput -> StreamMerge
 MergedStream -> CsvFileWriter

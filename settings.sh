@@ -21,7 +21,7 @@ export QUERIES_DIR=${PROJECT_ROOT}/queries
 
 # destination of facts, views and query results
 export FACTS_DIR=${WORKFLOWS_DIR}/facts
-export RECON_DIR=${WORKFLOWS_DIR}/recon
+# export RECON_DIR=${WORKFLOWS_DIR}/recon
 export VIEWS_DIR=${WORKFLOWS_DIR}/views
 export RESULTS_DIR=${WORKFLOWS_DIR}/results
 export LOCALRULES_DIR=${WORKFLOWS_DIR}/myLocalRules

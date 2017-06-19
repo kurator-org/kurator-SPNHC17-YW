@@ -31,7 +31,7 @@ graph :-
             gv_nodes__atomic_steps__upstream_of_data(W,D),
             gv_nodestyle__subworkflow,
             gv_nodes__subworkflows__upstream_of_data(W,D),
-            gv_nodestyle__data_value,
+            gv_nodestyle__datafile_value,
             gv_nodes__data_values__upstream_of_data_product(D,V),
             gv_nodestyle__param_value,
             gv_nodes__param_values__upstream_of_data_product(D,V),

@@ -55,15 +55,15 @@ Accept a parameter called namespace from the command line.
 Set the namespace in the options dictionary of Darwinize from the value
 of the format parameter given on the command line.
 @BEGIN BranchingWorkflow
-@PARAM DwCA_URI
-@IN DarwinCoreArchive @URI file:packages/kurator_branching/data/kurator_sample_data.txt
+@PARAM InputFilePath
+@IN DarwinCoreFile @URI file:packages/kurator_branching/data/kurator_sample_data_v2.txt
 Inline python actor to make a workspace on the fly to use for writing temporary
 if one is not supplied in the workflow-defined parameters. It creates a unique
 workspace if a workspace location is not explicitly provided, or if the provided
 one does not exist.
 @BEGIN Setup
-@PARAM DwCA_URI
-@IN DarwinCoreArchive @URI packages/kurator_branching/data/kurator_sample_data.txt
+@PARAM InputFilePath
+@IN DarwinCoreFile @URI file:packages/kurator_branching/data/kurator_sample_data_v2.txt
 Inline python code to run.
 The function to run when an on_start message is received. Accepts a dictionary
 of options.
@@ -118,26 +118,28 @@ Pass only records tagged with isMarine=true
 @IN TaggedDataRecord
 @OUT LogFile @URI file:runlog.log
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}
-@OUT Marine
+@OUT <MarineDataRecord[scientificName:scientificNameAuthorship]>
 @End FilterToJustMarine
 Pass only records not tagged with isMarine=true
 @BEGIN FilterExcludingMarine
 @IN TaggedDataRecord
 @OUT LogFile @URI file:runlog.log
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}
-@OUT NotMarine
+@OUT <noMarineDataRecord[scientificName:scientificNameAuthorship]>
 @END FilterExcludingMarine
 Lookup GUIDs for names in WoRMS
 @BEGIN WoRMSLookup
-@IN Marine
-@OUT WoRMSOutput @URI file:runlog.log
+@IN <MarineDataRecord[scientificName:scientificNameAuthorship]>
+@OUT WoRMSOutput
+@OUT LogFile @URI file:runlog.log
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Looking Up: {scientificName}:{scientificNameAuthorship}
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Found GUID: {LookupValue}
 @END WoRMSLookup
 Lookup GUIDs for names in GBIF
 @BEGIN GBIFLookup
-@IN NotMarine
-@OUT GBIFOutput @URI file:runlog.log
+@IN <noMarineDataRecord[scientificName:scientificNameAuthorship]>
+@OUT GBIFOutput
+@OUT LogFile @URI file:runlog.log
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Looking Up: {scientificName}:{scientificNameAuthorship}
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Found GUID: {LookupValue}
 @END GBIFLookup
@@ -151,7 +153,7 @@ Merge the streams
 @IN Workspace
 @IN MergedStream
 Write to a csv file
-@OUT OutputFile @URI file:{workspace}/mergedoutuputfile.csv
+@OUT OutputFile @URI file:{workspace}/mergedoutputfile.csv
 @END CsvFileWriter
 Inline python actor to take care of any unfinished business and finish the workflow.
 Inline python code to run.
