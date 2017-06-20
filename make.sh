@@ -141,14 +141,28 @@ dot -Tsvg $RESULTS_DIR/wf_recon_complete_graph_all_observables.gv > $RESULTS_DIR
 
 # given an occurrenceID, draw hybrid complete provenance graph with record-level runtime observables
 # isMarine occurrenceID="MCZ:Mala:303063"
-occurrenceID="MCZ:Mala:303063"
-$QUERIES_DIR/render_recon_complete_wf_graph_record_level_q7.sh \'$occurrenceID\' > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv
-dot -Tpdf $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.pdf
-dot -Tsvg $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.svg
+# occurrenceID="MCZ:Mala:303063"
+# $QUERIES_DIR/render_recon_complete_wf_graph_record_level_q7.sh \'$occurrenceID\' > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv
+# dot -Tpdf $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.pdf
+# dot -Tsvg $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.svg
 
 # noMarine occurrenceID="MCZ:Mala:278687"
-occurrenceID="MCZ:Mala:278687"
-$QUERIES_DIR/render_recon_complete_wf_graph_record_level_q7.sh \'$occurrenceID\' > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv
-dot -Tpdf $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.pdf
-dot -Tsvg $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.svg
+# occurrenceID="MCZ:Mala:278687"
+# $QUERIES_DIR/render_recon_complete_wf_graph_record_level_q7.sh \'$occurrenceID\' > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv
+# dot -Tpdf $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.pdf
+# dot -Tsvg $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.svg
  
+
+##############
+#   Q8_pro   #
+##############
+
+# run other log queries
+$QUERIES_DIR/run_log_queries.sh &> $RESULTS_DIR/run_log_queries_output.txt
+# LQ1: Given an occurrenceID "MCZ:Orn:149849", confirm if the record is Marine or not?
+# LQ2: How many records are Marine (noMarine)?
+# LQ3: Which records are Marine?
+# LQ4: Given an occurrenceID, is a match found (GUID:not null --> Match; GUID:null --> Unable to validate)? What data sources (validation services) were used (GBIFLookup or WoRMSLookup)? 
+# LQ5: How many Marine(noMarine) records found a match?
+# LQ6: Which records found a match?
+# LQ7: How many records could not find a match?
