@@ -2,7 +2,7 @@
 #
 # ./run_log_queries.sh &> run_log_queries_output.txt
 
-xsb --quietload --noprompt --nofeedback --nobanner << END_XSB_STDIN
+$XSB --quietload --noprompt --nofeedback --nobanner << END_XSB_STDIN
 
 ['$RULES_DIR/log_query_rules'].
 ['$QUERIES_DIR/log_queries'].

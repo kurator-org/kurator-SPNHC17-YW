@@ -147,6 +147,7 @@ $QUERIES_DIR/render_recon_complete_wf_graph_q6.sh > $RESULTS_DIR/wf_recon_comple
 dot -Tpdf $RESULTS_DIR/wf_recon_complete_graph_all_observables.gv > $RESULTS_DIR/wf_recon_complete_graph_all_observables.pdf
 dot -Tsvg $RESULTS_DIR/wf_recon_complete_graph_all_observables.gv > $RESULTS_DIR/wf_recon_complete_graph_all_observables.svg
 
+
 ##############
 #   Q7_pro   #
 ##############
@@ -159,9 +160,27 @@ $QUERIES_DIR/render_recon_complete_wf_graph_record_level_q7.sh \'$occurrenceID\'
 dot -Tpdf $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.pdf
 dot -Tsvg $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.svg
 
+echo "q7 recon hybrid record level observables MCZ:MALA:278687"  
 # noMarine occurrenceID="MCZ:Mala:278687"
 occurrenceID="MCZ:Mala:278687"
 $QUERIES_DIR/render_recon_complete_wf_graph_record_level_q7.sh \'$occurrenceID\' > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv
 dot -Tpdf $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.pdf
 dot -Tsvg $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.gv > $RESULTS_DIR/wf_recon_complete_graph_of_$occurrenceID.svg
  
+
+
+###################
+#   Log Queries   #
+###################
+
+echo "run hybrid record level observables queries"  
+# run other log queries
+$QUERIES_DIR/run_log_queries.sh &> $RESULTS_DIR/run_log_queries_output.txt
+# LQ1: Given an occurrenceID "MCZ:Orn:149849", confirm if the record is Marine or not?
+# LQ2: How many records are Marine (noMarine)?
+# LQ3: Which records are Marine?
+# LQ4: Given an occurrenceID, is a match found (GUID:not null --> Match; GUID:null --> Unable to validate)? What data sources (validation services) were used (GBIFLookup or WoRMSLookup)? 
+# LQ5: How many Marine(noMarine) records found a match?
+# LQ6: Which records found a match?
+# LQ7: How many records could not find a match?
+
