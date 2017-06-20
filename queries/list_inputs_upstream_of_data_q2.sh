@@ -3,7 +3,7 @@
 ProvidedDataName=$1
 PrintProvidedDataName=$2
 
-xsb --quietload --noprompt --nofeedback --nobanner << END_XSB_STDIN
+/usr/local/bin/xsb/xsb-3.7/bin/xsb --quietload --noprompt --nofeedback --nobanner << END_XSB_STDIN
 
 ['$RULES_DIR/general_rules'].
 ['$VIEWS_DIR/yw_views'].

@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-xsb --quietload --noprompt --nofeedback --nobanner << END_XSB_STDIN
+/usr/local/bin/xsb/xsb-3.7/bin/xsb --quietload --noprompt --nofeedback --nobanner << END_XSB_STDIN
 
 ['$FACTS_DIR/yw_extract_facts'].
 ['$FACTS_DIR/yw_model_facts'].

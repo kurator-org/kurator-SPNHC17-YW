@@ -12,8 +12,27 @@ yesworkflow-0.2.2.0-SNAPSHOT-jar-with-dependencies.jar.gz
 
 from https://github.com/yesworkflow-org/yw-prototypes/releases/tag/0.2.2.0-alpha
 
+Install xsb
+
+Set the path to the xsb binary in settings.sh
+
+e.g.
+
+export XSB="/usr/local/bin/xsb/xsb-3.7/bin/xsb"
+
+Checkout kurator-validation
+
+make symbolic links 
+
+target
+
+packages 
+
+into the kurator-validation checkout
+
 ## To run
 
+source settings.sh
 sh make.sh
 
 or run the commands in make.sh individually.
