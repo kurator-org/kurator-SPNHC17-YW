@@ -52,8 +52,8 @@ gv_nodestyle__unuseddata :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % explicit empty/unused data candidates: gv_nodes__unuseddata_candidates(UnusedStepName, TaggedDataRecordValue) 
-gv_nodes__unuseddata_candidates('<MarineDataRecord[scientificName:scientificNameAuthorship]>', 'NonMarine').
-gv_nodes__unuseddata_candidates('<noMarineDataRecord[scientificName:scientificNameAuthorship]>', 'Marine').
+gv_nodes__unuseddata_candidates('MarineDataRecord', 'NonMarine').
+gv_nodes__unuseddata_candidates('notMarineDataRecord', 'Marine').
 gv_nodes__unuseddata_candidates('WoRMSOutput', 'NonMarine').
 gv_nodes__unuseddata_candidates('GBIFOutput', 'Marine').
 
@@ -516,8 +516,8 @@ gv_nodes__recon_not_input_not_output_data(WorkflowId) :-
 % DataName that will be represented at record level: yw_data_record_level(DataName)
 yw_data_record_level('DataRecord').
 yw_data_record_level('TaggedDataRecord').
-yw_data_record_level('<MarineDataRecord[scientificName:scientificNameAuthorship]>').
-yw_data_record_level('<noMarineDataRecord[scientificName:scientificNameAuthorship]>').
+yw_data_record_level('MarineDataRecord').
+yw_data_record_level('notMarineDataRecord').
 yw_data_record_level('WoRMSOutput').
 yw_data_record_level('GBIFOutput').
 
@@ -531,8 +531,8 @@ print_data_record(OccurrenceID, DN) :-
      true.
 
 % explicit empty/unused data candidates: log_unuseddata_candidates(UnusedStepName, TaggedDataRecordValue) 
-log_unuseddata_candidates('<MarineDataRecord[scientificName:scientificNameAuthorship]>', 'NonMarine').
-log_unuseddata_candidates('<noMarineDataRecord[scientificName:scientificNameAuthorship]>', 'Marine').
+log_unuseddata_candidates('MarineDataRecord', 'NonMarine').
+log_unuseddata_candidates('notMarineDataRecord', 'Marine').
 log_unuseddata_candidates('WoRMSOutput', 'NonMarine').
 log_unuseddata_candidates('GBIFOutput', 'Marine').
 

@@ -118,18 +118,18 @@ Pass only records tagged with isMarine=true
 @IN TaggedDataRecord
 @OUT LogFile @URI file:runlog.log
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}
-@OUT <MarineDataRecord[scientificName:scientificNameAuthorship]>
+@OUT MarineDataRecord
 @End FilterToJustMarine
 Pass only records not tagged with isMarine=true
 @BEGIN FilterExcludingMarine
 @IN TaggedDataRecord
 @OUT LogFile @URI file:runlog.log
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}
-@OUT <noMarineDataRecord[scientificName:scientificNameAuthorship]>
+@OUT notMarineDataRecord
 @END FilterExcludingMarine
 Lookup GUIDs for names in WoRMS
 @BEGIN WoRMSLookup
-@IN <MarineDataRecord[scientificName:scientificNameAuthorship]>
+@IN MarineDataRecord
 @OUT WoRMSOutput
 @OUT LogFile @URI file:runlog.log
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Looking Up: {scientificName}:{scientificNameAuthorship}
@@ -137,7 +137,7 @@ Lookup GUIDs for names in WoRMS
 @END WoRMSLookup
 Lookup GUIDs for names in GBIF
 @BEGIN GBIFLookup
-@IN <noMarineDataRecord[scientificName:scientificNameAuthorship]>
+@IN notMarineDataRecord
 @OUT GBIFOutput
 @OUT LogFile @URI file:runlog.log
 @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> Looking Up: {scientificName}:{scientificNameAuthorship}

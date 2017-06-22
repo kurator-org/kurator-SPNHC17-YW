@@ -30,17 +30,17 @@ annotation(26, 1, 231, 'in', '@IN', 'TaggedDataRecord').
 annotation(27, 1, 241, 'out', '@OUT', 'LogFile').
 annotation(28, 1, 241, 'uri', '@URI', 'file:runlog.log').
 annotation(29, 1, 242, 'log', '@LOG', '{timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}').
-annotation(30, 1, 243, 'out', '@OUT', '<MarineDataRecord[scientificName:scientificNameAuthorship]>').
+annotation(30, 1, 243, 'out', '@OUT', 'MarineDataRecord').
 annotation(31, 1, 244, 'end', '@End', 'FilterToJustMarine').
 annotation(32, 1, 247, 'begin', '@BEGIN', 'FilterExcludingMarine').
 annotation(33, 1, 248, 'in', '@IN', 'TaggedDataRecord').
 annotation(34, 1, 258, 'out', '@OUT', 'LogFile').
 annotation(35, 1, 258, 'uri', '@URI', 'file:runlog.log').
 annotation(36, 1, 259, 'log', '@LOG', '{timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}').
-annotation(37, 1, 260, 'out', '@OUT', '<noMarineDataRecord[scientificName:scientificNameAuthorship]>').
+annotation(37, 1, 260, 'out', '@OUT', 'notMarineDataRecord').
 annotation(38, 1, 261, 'end', '@END', 'FilterExcludingMarine').
 annotation(39, 1, 264, 'begin', '@BEGIN', 'WoRMSLookup').
-annotation(40, 1, 265, 'in', '@IN', '<MarineDataRecord[scientificName:scientificNameAuthorship]>').
+annotation(40, 1, 265, 'in', '@IN', 'MarineDataRecord').
 annotation(41, 1, 271, 'out', '@OUT', 'WoRMSOutput').
 annotation(42, 1, 272, 'out', '@OUT', 'LogFile').
 annotation(43, 1, 272, 'uri', '@URI', 'file:runlog.log').
@@ -48,7 +48,7 @@ annotation(44, 1, 273, 'log', '@LOG', '{timestamp} [{loglevel}] ACTOR<{actorname
 annotation(45, 1, 274, 'log', '@LOG', '{timestamp} [{loglevel}] ACTOR<{actorname}> -> Found GUID: {LookupValue}').
 annotation(46, 1, 275, 'end', '@END', 'WoRMSLookup').
 annotation(47, 1, 278, 'begin', '@BEGIN', 'GBIFLookup').
-annotation(48, 1, 279, 'in', '@IN', '<noMarineDataRecord[scientificName:scientificNameAuthorship]>').
+annotation(48, 1, 279, 'in', '@IN', 'notMarineDataRecord').
 annotation(49, 1, 285, 'out', '@OUT', 'GBIFOutput').
 annotation(50, 1, 286, 'out', '@OUT', 'LogFile').
 annotation(51, 1, 286, 'uri', '@URI', 'file:runlog.log').

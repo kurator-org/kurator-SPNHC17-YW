@@ -240,7 +240,7 @@ components:
       passOnMatch: true
 # @OUT LogFile @URI file:runlog.log       
 #    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}    
-# @OUT <MarineDataRecord[scientificName:scientificNameAuthorship]>
+# @OUT MarineDataRecord
 # @End FilterToJustMarine
 
 # Pass only records not tagged with isMarine=true
@@ -257,12 +257,12 @@ components:
       passOnMatch: false      
 # @OUT LogFile @URI file:runlog.log       
 #    @LOG {timestamp} [{loglevel}] ACTOR<{actorname}> -> [isMarine]=[true]:{matchMarineValue}. Passing occurrenceID={occurrenceID}    
-# @OUT <noMarineDataRecord[scientificName:scientificNameAuthorship]>
+# @OUT notMarineDataRecord
 # @END FilterExcludingMarine
 
 # Lookup GUIDs for names in WoRMS
 # @BEGIN WoRMSLookup
-# @IN <MarineDataRecord[scientificName:scientificNameAuthorship]>
+# @IN MarineDataRecord
 - id: WoRMSLookup
   type: SimpleWoRMSGUIDLookup
   properties:
@@ -276,7 +276,7 @@ components:
 
 # Lookup GUIDs for names in GBIF
 # @BEGIN GBIFLookup
-# @IN <noMarineDataRecord[scientificName:scientificNameAuthorship]>
+# @IN notMarineDataRecord
 - id: GBIFLookup
   type: SimpleGBIFGUIDLookup
   properties:
