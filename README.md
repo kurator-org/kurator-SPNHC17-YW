@@ -51,6 +51,7 @@ java -jar target/kurator-validation-1.0.1-SNAPSHOT-jar-with-dependencies.jar -f 
 Run yesworkflow and the xsb scripts to generate prospective and retrospective graphs and queries: 
 
      source settings.sh
+     sh clean.sh
      sh make.sh
 
-or run the commands in make.sh individually.
+or run the commands in make.sh individually (or run clean.sh between multiple runs of make.sh).
