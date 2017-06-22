@@ -45,6 +45,10 @@ gv_record_node_open(Name, TopText) :-
 gv_record_node_uri_list(DataId) :-
     print_all_resource_uri(DataId).
 
+gv_record_node_data_record(OccurrenceID, DN) :-
+    print_data_record(OccurrenceID, DN).
+
+
 gv_record_node_close() :-
     write('}"]'), eol.
 

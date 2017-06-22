@@ -324,3 +324,34 @@ log_record_match_result(OccurrenceID, 'NonMarine', ScientificName, ScientificNam
 	match(SortedGBIFLookupScientificNameAuthorship, NonMarineIndex, ScientificNameAuthorship),
 	log_nonmarine_scientificName_by_date(SortedGBIFLookupscientificName),
 	match(SortedGBIFLookupscientificName, NonMarineIndex, ScientificName). 
+
+% log_record_data_value(H,A,X,B,Y,C,Z,D,U,E,V,F,W) or 
+% log_record_data_value(OccurrenceID,DataRecord, DataRecordValue, TaggedDataRecord,TaggedDataRecordValue, MScientificNameAuthorship,MScientificNameAuthorshipValue, NMScientificNameAuthorship,NMScientificNameAuthorshipValie, WoRMSOutput,WoRMSOutputValue, GBIFOutput, GBIFOutputValue) 
+:- table log_record_data_value/13.
+log_record_data_value(A, 'DataRecord', X, 'TaggedDataRecord', 'Marine','<MarineDataRecord[scientificName:scientificNameAuthorship]>', MScientificNameAuthorship, '<noMarineDataRecord[scientificName:scientificNameAuthorship]>', ' ', 'WoRMSOutput', V, 'GBIFOutput', '')  :-
+	X = A,
+	log_record_match_result(X, 'Marine', Z, U, V, _),
+ 	atom_concat(Z,':',K), 
+ 	atom_concat(K, U, MScientificNameAuthorship).
+log_record_data_value(A, 'DataRecord', X, 'TaggedDataRecord', 'NonMarine','<MarineDataRecord[scientificName:scientificNameAuthorship]>', ' ', '<noMarineDataRecord[scientificName:scientificNameAuthorship]>', NMScientificNameAuthorship, 'WoRMSOutput', '', 'GBIFOutput', V)  :-
+	X = A,
+	log_record_match_result(X, 'NonMarine', Z, U, V, _),
+ 	atom_concat(Z,':',K), 
+ 	atom_concat(K, U, NMScientificNameAuthorship).
+
+% data_record(H, DataName, DataRecord)
+:- table data_record/3.
+data_record(H, DataName, DataRecord) :- 
+	log_record_data_value(H,DataName,DataRecord,_,_,_,_,_,_,_,_,_,_).
+data_record(H, DataName, DataRecord) :- 
+	log_record_data_value(H,_, _, DataName,DataRecord,_,_,_,_,_,_,_,_).
+data_record(H, DataName, DataRecord) :- 
+	log_record_data_value(H,_, _, _, _, DataName,DataRecord,_,_,_,_,_,_).
+data_record(H, DataName, DataRecord) :- 
+	log_record_data_value(H,_, _, _, _, _, _, DataName,DataRecord,_,_,_,_).
+data_record(H, DataName, DataRecord) :- 
+	log_record_data_value(H,_, _, _, _, _, _, _, _, DataName,DataRecord,_,_).
+data_record(H, DataName, DataRecord) :- 
+	log_record_data_value(H,_, _, _, _, _, _, _, _, _, _, DataName,DataRecord).
+
+

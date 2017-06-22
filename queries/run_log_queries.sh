@@ -2,7 +2,7 @@
 #
 # ./run_log_queries.sh &> run_log_queries_output.txt
 
-$XSB --quietload --noprompt --nofeedback --nobanner << END_XSB_STDIN
+xsb --quietload --noprompt --nofeedback --nobanner << END_XSB_STDIN
 
 ['$RULES_DIR/log_query_rules'].
 ['$QUERIES_DIR/log_queries'].
@@ -32,6 +32,11 @@ printall('lq5(MarineMatchCount) - How many Marine(noMarine) records found a matc
 printall('lq6(OccurrenceID) - Which records found a match?', lq6(_)).
 
 printall('lq7(NoMatchCount) - How many records could not find a match?', lq7(_)).
+
+% printall('log_record_data_value(OccurrenceID,DataName, DataNameValue, TaggedDataRecord,TaggedDataRecordValue, MScientificNameAuthorship,MScientificNameAuthorshipValue, NMScientificNameAuthorship,NMScientificNameAuthorshipValie, WoRMSOutput,WoRMSOutputValue, GBIFOutput, GBIFOutputValue)', log_record_data_value(_,_,_,_,_,_,_,_,_,_,_,_,_)).
+
+% printall('data_record(H, DataName, DataRecord)', data_record(_,_,_)).
+
 
 END_XSB_STDIN
 

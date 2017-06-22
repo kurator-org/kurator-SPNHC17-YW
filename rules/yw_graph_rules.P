@@ -47,17 +47,52 @@ gv_nodestyle__datarecord_value :-
         write('node[shape=box style="rounded,filled" fillcolor="#f8d2db" peripheries=1 fontname="Courier-Bold" fontsize=9]'), eol.
 		
 % explicit empty/unused data
-gv_nodestyle__undatafile_value :-
+gv_nodestyle__unuseddata :-
         write('node[shape=box style="rounded,filled" fillcolor="#d6d6d7" peripheries=1 fontname=Helvetica]'), eol.		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-gv_nodes__atomic_steps(WorkflowId) :-
-    yw_workflow_step(StepId, StepName, WorkflowId, _, _, _),
-    not yw_workflow(StepId, _, _, _, _, _),
-    gv_labeled_node(StepName),
+% explicit empty/unused data candidates: gv_nodes__unuseddata_candidates(UnusedStepName, TaggedDataRecordValue) 
+gv_nodes__unuseddata_candidates('<MarineDataRecord[scientificName:scientificNameAuthorship]>', 'NonMarine').
+gv_nodes__unuseddata_candidates('<noMarineDataRecord[scientificName:scientificNameAuthorship]>', 'Marine').
+gv_nodes__unuseddata_candidates('WoRMSOutput', 'NonMarine').
+gv_nodes__unuseddata_candidates('GBIFOutput', 'Marine').
+
+gv_nodes__unuseddata(OccurrenceID, UnusedDataName) :-
+	log_record_data_value(_, _, OccurrenceID, _, TaggedDataRecordValue, _, _, _,_, _, _, _, _),
+	gv_nodes__unuseddata_candidates(UnusedDataName, TaggedDataRecordValue),
+	gv_labeled_node(UnusedDataName),
     fail
     ;
     true.
+	
+
+
+% explicit empty/unused box/step candidates: gv_nodes__atomic_steps_unusedstep_candidates(UnusedStepName, TaggedDataRecordValue) for gv_nodestyle__atomic_unusedstep 
+gv_nodes__atomic_steps_unusedstep_candidates('FilterToJustMarine', 'NonMarine').
+gv_nodes__atomic_steps_unusedstep_candidates('FilterExcludingMarine', 'Marine').
+gv_nodes__atomic_steps_unusedstep_candidates('WoRMSLookup', 'NonMarine').
+gv_nodes__atomic_steps_unusedstep_candidates('GBIFLookup', 'Marine').
+
+gv_nodes__atomic_unusedstep(OccurrenceID, UnusedStepName) :-
+	log_record_data_value(_, _, OccurrenceID, _, TaggedDataRecordValue, _, _, _,_, _, _, _, _),
+	gv_nodes__atomic_steps_unusedstep_candidates(UnusedStepName, TaggedDataRecordValue),
+	gv_labeled_node(UnusedStepName),
+    fail
+    ;
+    true.
+
+
+gv_nodes__atomic_steps(WorkflowId) :-
+	yw_workflow_step(StepId, StepName, WorkflowId, _, _, _),
+	not yw_workflow(StepId, _, _, _, _, _),
+	gv_labeled_node(StepName),
+    fail
+    ;
+    true.
+
+
+
+
 
 yw_inflow_name_for_data_name(InflowName, DataName) :-
     concat_atom([DataName,'_inflow'], InflowName).
@@ -422,7 +457,7 @@ resource_group_by_dataId(X, Ys) :-
 
 print_all_resource_uri(X) :-
      data_uri_resource(X,Y),
-     fmt_write('%S\\l', Y),
+     fmt_write('%S\\n', Y),
      fail
      ;
      true.
@@ -476,6 +511,49 @@ gv_nodes__recon_not_input_not_output_data(WorkflowId) :-
     fail
     ;
     true.
+
+% record-/data-level observables 
+% DataName that will be represented at record level: yw_data_record_level(DataName)
+yw_data_record_level('DataRecord').
+yw_data_record_level('TaggedDataRecord').
+yw_data_record_level('<MarineDataRecord[scientificName:scientificNameAuthorship]>').
+yw_data_record_level('<noMarineDataRecord[scientificName:scientificNameAuthorship]>').
+yw_data_record_level('WoRMSOutput').
+yw_data_record_level('GBIFOutput').
+
+
+print_data_record(OccurrenceID, DN) :-
+	 log_record_data_value(_, _, OccurrenceID, _, _, _, _, _,_, _, _, _, _),
+ 	 data_record(OccurrenceID, DN, DR),
+     fmt_write('%S\\n', DR),
+     fail
+     ;
+     true.
+
+% explicit empty/unused data candidates: log_unuseddata_candidates(UnusedStepName, TaggedDataRecordValue) 
+log_unuseddata_candidates('<MarineDataRecord[scientificName:scientificNameAuthorship]>', 'NonMarine').
+log_unuseddata_candidates('<noMarineDataRecord[scientificName:scientificNameAuthorship]>', 'Marine').
+log_unuseddata_candidates('WoRMSOutput', 'NonMarine').
+log_unuseddata_candidates('GBIFOutput', 'Marine').
+
+log_unuseddata(OccurrenceID, UnusedDataName) :-
+	log_record_data_value(_, _, OccurrenceID, _, TaggedDataRecordValue, _, _, _,_, _, _, _, _),
+	log_unuseddata_candidates(UnusedDataName, TaggedDataRecordValue).
+
+
+
+gv_nodes__recon_not_input_not_output_datarecord(OccurrenceID) :-
+	log_record_data_value(_, _, OccurrenceID, _, _, _, _, _,_, _, _, _, _),
+	yw_data_record_level(DN),
+	% not log_unuseddata(OccurrenceID, DN) ,
+	concat_atom([DN], Top),
+    gv_record_node_open(DN, Top),
+	gv_record_node_data_record(OccurrenceID, DN),
+	gv_record_node_close,
+	fail
+    ;
+    true.
+
 
 gv_nodes__input_recon_data(WorkflowId) :-
     yw_data_used_as_in(DataId),
