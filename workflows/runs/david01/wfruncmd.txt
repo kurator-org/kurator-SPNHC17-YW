@@ -1,1 +1,0 @@
-lowery@hydrogen:~/IdeaProjects/kurator-validation$ java -jar target/kurator-validation-1.0.1-SNAPSHOT-jar-with-dependencies.jar -f packages/kurator_branching/workflows/dwca_branching_taxon_lookup.yaml -p dwca_url=http://digir.mcz.harvard.edu/ipt/archive.do?r=kurator_sample_data -l ALL > runlog.log 2>&1
